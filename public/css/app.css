@@ -1,0 +1,121 @@
+body {
+    background-color: #FF6600;
+    font-family: "HelveticaNeue-Light";
+    color: white;
+}
+
+.row {
+    display: block;
+    width: 110%;
+    margin: 0 0 0 -5%;
+    cursor: pointer;
+}
+
+.row.first {
+    background-color: #E74112; 
+    min-height: 100px;
+}
+
+.row.second {
+    background-color: #FF6600;
+    min-height: 100px;
+}
+
+.row.third {
+    background-color: #EC8651;
+    min-height: 100px;
+}
+
+.row.fourth {
+    background-color: #EEA871;
+    min-height: 100px;
+}
+
+.row.fifth {
+    background-color: #F1CB91;
+    min-height: 100px;
+}
+
+.dish-type, .favorite {
+    height: 51px;
+    width: 50.5px;
+    margin: 15px auto 0 auto;
+}
+
+.food {
+    background: url("../images/sprites.png") -151px 0;
+}
+
+.drink {
+    background: url("../images/sprites.png") -101px 0;
+}
+
+.favorite {
+    background: url("../images/sprites.png") -50.5px 0;
+}
+
+.favorite.liked {
+    background: url("../images/sprites.png") 0 0;
+}
+
+.dish-type-container {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    width: 24%;
+    float: left;
+}
+
+.favorite-container {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    width: 24%;
+    float: right;
+}
+
+.dish {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    width: 48%;
+    display: inline-block;
+    padding: 0 5px 0 20px;
+}
+
+.restaurant-name {
+    font-style: italic;
+    font-size: 25px;
+    padding: 0 0 0 8%;
+}
+
+.dish-name {
+    font-size: 20px;
+}
+
+.dish-price {
+    font-style: italic;
+    font-size: 15px;
+    line-height: 5px;
+}
+
+.dish-description {
+    font-size: 12px;
+}
+
+.animate-show {
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -ms-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+    
+    height: 75px;
+    overflow: hidden;
+}
+
+.animate-show.ng-hide {
+    height: 0;
+}

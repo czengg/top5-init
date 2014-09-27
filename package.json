@@ -4,7 +4,6 @@
     "version"      : "0.0.1",
     "dependencies" : {
         "express" : "4.9.5",
-        "router"  : "0.6.2",
         "express-session" : "1.8.2",
         "mongojs" : "0.14.2"
     }
