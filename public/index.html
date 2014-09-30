@@ -9,7 +9,7 @@
         <div class="restaurant-container row">
             <h1 class="restaurant-name">{{ c.restaurant.name }}</h1>
         </div>
-        <div class="dish-container" data-ng-if="loadingIsDone">
+        <div class="dish-container">
             <div data-ng-repeat="dish in c.restaurant.dishes">
                 <div class="row" data-ng-class="{ first: dish.likeRank == 0, second: dish.likeRank == 1, third: dish.likeRank == 2, fourth: dish.likeRank == 3, fifth: dish.likeRank == 4 }">
                     <div class="dish-type-container">
