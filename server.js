@@ -9,17 +9,18 @@ var app = express();
 var router = express.Router();
 
 //all environments
-app.set('port', process.env.PORT || 8080);
-app.use(express.static(path.join(__dirname, 'public')));
+app.set('port', process.env.PORT || 3000);
+app.use(express.static(path.join(__dirname, 'public/www')));
 
 router.get('/', function (req, res) {
     res.sendFile('index.html');
 });
 
-router.get('/getrestaurant/:restaurant', function(req, res) {
+router.get('/getrestaurant/:long/:lat', function(req, res) {
     var restaurant = {};
     restaurant.dishes = [
         {
+            id          : 0,
             type        : "food",
             name        : "Pad Thai",
             price       : 7.25,
@@ -28,6 +29,7 @@ router.get('/getrestaurant/:restaurant', function(req, res) {
             likeRank    : 2
         },
         {
+            id          : 1,
             type        : "food",
             name        : "Singapore Rice Noodle",
             price       : 7.25,
@@ -36,6 +38,7 @@ router.get('/getrestaurant/:restaurant', function(req, res) {
             likeRank    : 1
         },
         {
+            id          : 2,
             type        : "food",
             name        : "Beef Chow Fun",
             price       : 7.25,
@@ -44,6 +47,7 @@ router.get('/getrestaurant/:restaurant', function(req, res) {
             likeRank    : 3
         },
         {
+            id          : 3,
             type        : "food",
             name        : "Traditional Fried Rice",
             price       : 6.50,
@@ -52,6 +56,7 @@ router.get('/getrestaurant/:restaurant', function(req, res) {
             likeRank    : 4
         }, 
         {
+            id          : 4,
             type        : "drink",
             name        : "Fresh Mango Bubble Tea",
             price       : 7.25,
@@ -60,9 +65,14 @@ router.get('/getrestaurant/:restaurant', function(req, res) {
             likeRank    : 0
         }
     ];
+    restaurant.id = 0;
     restaurant.selected = restaurant.dishes[0].name;
     restaurant.name = "Lulu's Noodle House";
     res.send(JSON.stringify(restaurant));
+});
+
+router.get('/updatefavorite/:restaurant/:dish', function(req, res) {
+    res.send(req.params.dish);
 });
 
 app.use('/', router);
