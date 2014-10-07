@@ -17,14 +17,11 @@ var databaseUrl = "localhost:27017/top5db1"; // "username:password@example.com/m
 var collections = ["restaurants"]
 var db = require("mongojs").connect(databaseUrl, collections);
 
-// app.use(function(req,res,next){
-//     req.db = db;
-//     next();
-// });
-
-router.get('/', function (req, res) {
-    res.sendFile('index.html');
+app.use(function(req,res,next){
+    req.db = db;
+    next();
 });
+
 
 
 router.get('/', function(req, res) {
