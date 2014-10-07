@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html data-ng-app="top5">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" href="css/app.css" type="text/css"></link>
+        <title>Top5</title>
+    </head>
+    <body data-ng-controller="DishesController as c">
+        <div class="restaurant-container row">
+            <h1 class="restaurant-name">{{ c.restaurant.name }}</h1>
+        </div>
+        <div class="dish-container">
+            <div data-ng-repeat="dish in c.restaurant.dishes">
+                <div class="row" data-ng-class="{ first: dish.likeRank == 0, second: dish.likeRank == 1, third: dish.likeRank == 2, fourth: dish.likeRank == 3, fifth: dish.likeRank == 4 }">
+                    <div class="dish-type-container">
+                        <div class=" dish-type {{ dish.type }}">
+                        </div>
+                    </div>
+                    <div class="dish">
+                        <div class="dish-summary" data-ng-click="c.restaurant.selected = dish.name">
+                            <h1 class="dish-name">{{ dish.name }}</h1>
+                            <h2 class="dish-price">{{ dish.price | currency }}</h2>
+                        </div>
+                        <div class="dish-description animate-show" data-ng-show="c.restaurant.selected === dish.name"> 
+                            <p>{{ dish.description }}</p>
+                        </div>
+                    </div>
+                    <div class="favorite-container">
+                        <div class="favorite" data-ng-class="{ liked: dish.favorited }" data-ng-click="c.favoriteToggle(c.restaurant, dish)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="js/controllers/dishesController.js"></script>
+        <script type="text/javascript">
+            window.onerror = function(message, url, lineNumber) {
+                console.log("Error: "+message+" in "+url+" at line "+lineNumber);
+            }
+        </script>
+    </body>
+</html>

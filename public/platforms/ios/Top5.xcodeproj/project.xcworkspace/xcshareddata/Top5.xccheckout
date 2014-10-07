@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0E7FDE42-289A-4205-ACC6-252DCB4C1862</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Top5</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>882FF7FB3DD9D85D7C0561914C6496A3DFC5D066</key>
+		<string>https://github.com/czengg/top5.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>public/platforms/ios/Top5.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>882FF7FB3DD9D85D7C0561914C6496A3DFC5D066</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/czengg/top5.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>882FF7FB3DD9D85D7C0561914C6496A3DFC5D066</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>882FF7FB3DD9D85D7C0561914C6496A3DFC5D066</string>
+			<key>IDESourceControlWCCName</key>
+			<string>top5JS</string>
+		</dict>
+	</array>
+</dict>
+</plist>
