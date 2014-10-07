@@ -12,10 +12,11 @@ var DishesController = function ($http) {
     
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            self.long = position.coords.longitude;
-            self.lat = position.coords.latitude;
+            self.long = Math.floor(position.coords.longitude);
+            self.lat = Math.floor(position.coords.latitude);
             var geoUrl = 'http://localhost:3000/getrestaurant/' + self.long + '/' + self.lat;
             $http.get(geoUrl).success(function(data) {
+                console.log(data);
                 self.restaurant = data
             });
         });
