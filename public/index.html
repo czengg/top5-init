@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="css/app.css" type="text/css"></link>
     </head>
     <body data-ng-controller="DishesController as c">
-        {{ c.here }}
         <div class="restaurant-container row">
             <h1 class="restaurant-name">{{ c.restaurant.name }}</h1>
         </div>
@@ -17,11 +16,11 @@
                         </div>
                     </div>
                     <div class="dish">
-                        <div class="dish-summary" data-ng-click="restaurant.selected = dish.name">
+                        <div class="dish-summary" data-ng-click="c.restaurant.selected = dish.name">
                             <h1 class="dish-name">{{ dish.name }}</h1>
                             <h2 class="dish-price">{{ dish.price | currency }}</h2>
                         </div>
-                        <div class="dish-description animate-show" data-ng-show="restaurant.selected === dish.name"> 
+                        <div class="dish-description animate-show" data-ng-show="c.restaurant.selected === dish.name"> 
                             <p>{{ dish.description }}</p>
                         </div>
                     </div>
