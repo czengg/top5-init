@@ -1,0 +1,20 @@
+{
+  "name": "top5",
+  "version": "0.0.0",
+  "homepage": "https://github.com/czengg/top5",
+  "authors": [
+    "Jay Chopra <jchopra@andrew.cmu.edu>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-animate": "~1.2.25",
+    "angular": "~1.2.25"
+  }
+}

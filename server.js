@@ -12,58 +12,79 @@ var router = express.Router();
 app.set('port', process.env.PORT || 8080);
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+var databaseUrl = "localhost:27017/top5db1"; // "username:password@example.com/mydb"
+var collections = ["restaurants"]
+var db = require("mongojs").connect(databaseUrl, collections);
+
+// app.use(function(req,res,next){
+//     req.db = db;
+//     next();
+// });
+
 router.get('/', function (req, res) {
     res.sendFile('index.html');
 });
 
-router.get('/getrestaurant/:restaurant', function(req, res) {
-    var restaurant = {};
-    restaurant.dishes = [
-        {
-            type        : "food",
-            name        : "Pad Thai",
-            price       : 7.25,
-            description : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.",
-            favorited   : true,
-            likeRank    : 2
-        },
-        {
-            type        : "food",
-            name        : "Singapore Rice Noodle",
-            price       : 7.25,
-            description : "Vermicelli rice noodles stir fried in light curry with shrimp, chicken, bean sprouts, onion and eggs.",
-            favorited   : true,
-            likeRank    : 1
-        },
-        {
-            type        : "food",
-            name        : "Beef Chow Fun",
-            price       : 7.25,
-            description : "Fresh wide rice noodles, bean sprouts, green onions, stir fried in specia sauce handed down from ma ma's recipes.",
-            favorited   : false,
-            likeRank    : 3
-        },
-        {
-            type        : "food",
-            name        : "Traditional Fried Rice",
-            price       : 6.50,
-            description : "Seasoned rice, green peas, carrot, onion, egg, your choice of meats.",
-            favorited   : false,
-            likeRank    : 4
-        }, 
-        {
-            type        : "drink",
-            name        : "Fresh Mango Bubble Tea",
-            price       : 7.25,
-            description : "Milk Tea with Bubbles made with Fresh Mango",
-            favorited   : true,
-            likeRank    : 0
-        }
-    ];
-    restaurant.selected = restaurant.dishes[0].name;
-    restaurant.name = "Lulu's Noodle House";
-    res.send(JSON.stringify(restaurant));
+
+router.get('/userlist', function(req, res) {
+    var db = req.db;
+    var collection = db.get('usercollection');
+    collection.find({},{},function(e,docs){
+        res.render('userlist', {
+            "userlist" : docs
+        });
+    });
 });
+
+// router.get('/getrestaurant/:restaurant', function(req, res) {
+//     var restaurant = {};
+//     restaurant.dishes = [
+//         {
+//             type        : "food",
+//             name        : "Pad Thai",
+//             price       : 7.25,
+//             description : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.",
+//             favorited   : true,
+//             likeRank    : 2
+//         },
+//         {
+//             type        : "food",
+//             name        : "Singapore Rice Noodle",
+//             price       : 7.25,
+//             description : "Vermicelli rice noodles stir fried in light curry with shrimp, chicken, bean sprouts, onion and eggs.",
+//             favorited   : true,
+//             likeRank    : 1
+//         },
+//         {
+//             type        : "food",
+//             name        : "Beef Chow Fun",
+//             price       : 7.25,
+//             description : "Fresh wide rice noodles, bean sprouts, green onions, stir fried in specia sauce handed down from ma ma's recipes.",
+//             favorited   : false,
+//             likeRank    : 3
+//         },
+//         {
+//             type        : "food",
+//             name        : "Traditional Fried Rice",
+//             price       : 6.50,
+//             description : "Seasoned rice, green peas, carrot, onion, egg, your choice of meats.",
+//             favorited   : false,
+//             likeRank    : 4
+//         }, 
+//         {
+//             type        : "drink",
+//             name        : "Fresh Mango Bubble Tea",
+//             price       : 7.25,
+//             description : "Milk Tea with Bubbles made with Fresh Mango",
+//             favorited   : true,
+//             likeRank    : 0
+//         }
+//     ];
+//     restaurant.selected = restaurant.dishes[0].name;
+//     restaurant.name = "Lulu's Noodle House";
+//     res.send(JSON.stringify(restaurant));
+// });
 
 app.use('/', router);
 
