@@ -2,6 +2,7 @@ var http     = require('http'),
     path     = require('path'),
     fs       = require('fs'),
     url      = require('url'),
+    mongo    = require('mongodb'),
     mongoose = require('mongoose'),
     express  = require('express');
 
