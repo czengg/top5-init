@@ -1,6 +1,4 @@
-var DishesController = function ($http) {
-    this.restaurant = {};
-    var self = this;
+var DishesController = function ($http, $scope) {
 
     this.favoriteToggle = function(restaurant, dish) {
         dish.favorited = !dish.favorited;
@@ -12,11 +10,13 @@ var DishesController = function ($http) {
     
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            self.long = position.coords.longitude;
-            self.lat = position.coords.latitude;
+            self.long = Math.floor(position.coords.longitude);
+            self.lat = Math.floor(position.coords.latitude);
             var geoUrl = 'http://localhost:3000/getrestaurant/' + self.long + '/' + self.lat;
             $http.get(geoUrl).success(function(data) {
-                self.restaurant = data
+                console.log(data);
+                $scope.restaurant = data;
+                console.log($scope.restaurant);
             });
         });
     }

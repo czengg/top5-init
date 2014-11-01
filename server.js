@@ -4,6 +4,9 @@ var http    = require('http'),
     url     = require('url'),
     mongojs = require('mongojs'),
     express = require('express');
+    jsdom = require("jsdom");
+    locu = require("locu");
+    vclient = new locu.VenueClient('a6d9c2a756e0ea4fecbece23c4849557cbef7fe5');
 
 var app = express();
 var router = express.Router();
@@ -13,7 +16,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'public/www')));
 
 
-var databaseUrl = "localhost:27017/top5db1"; // "username:password@example.com/mydb"
+var databaseUrl = "top5db1"; // "username:password@example.com/mydb"
 var collections = ["restaurants"]
 var db = require("mongojs").connect(databaseUrl, collections);
 
@@ -23,85 +26,34 @@ app.use(function(req,res,next){
 });
 
 
-
-router.get('/', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
-        });
-    });
-});
-
-
 router.get('/getrestaurant/:long/:lat', function(req, res) {
-    var db = req.db;
-    var collection = db.get('usercollection');
-    collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
-        });
+    db.restaurants.find({
+        long : parseInt(req.params.long),
+        lat  : parseInt(req.params.lat)
+    }, function(err, restaurant) {
+        if (err) {
+            res.send(JSON.stringify(err));
+        } else {
+            res.send(JSON.stringify(restaurant[0]));
+        }
     });
-    // var restaurant = {};
-    // restaurant.dishes = [
-    //     {
-    //         id          : 0,
-    //         type        : "food",
-    //         name        : "Pad Thai",
-    //         price       : 7.25,
-    //         description : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.",
-    //         favorited   : true,
-    //         likeRank    : 2
-    //     },
-    //     {
-    //         id          : 1,
-    //         type        : "food",
-    //         name        : "Singapore Rice Noodle",
-    //         price       : 7.25,
-    //         description : "Vermicelli rice noodles stir fried in light curry with shrimp, chicken, bean sprouts, onion and eggs.",
-    //         favorited   : true,
-    //         likeRank    : 1
-    //     },
-    //     {
-    //         id          : 2,
-    //         type        : "food",
-    //         name        : "Beef Chow Fun",
-    //         price       : 7.25,
-    //         description : "Fresh wide rice noodles, bean sprouts, green onions, stir fried in specia sauce handed down from ma ma's recipes.",
-    //         favorited   : false,
-    //         likeRank    : 3
-    //     },
-    //     {
-    //         id          : 3,
-    //         type        : "food",
-    //         name        : "Traditional Fried Rice",
-    //         price       : 6.50,
-    //         description : "Seasoned rice, green peas, carrot, onion, egg, your choice of meats.",
-    //         favorited   : false,
-    //         likeRank    : 4
-    //     }, 
-    //     {
-    //         id          : 4,
-    //         type        : "drink",
-    //         name        : "Fresh Mango Bubble Tea",
-    //         price       : 7.25,
-    //         description : "Milk Tea with Bubbles made with Fresh Mango",
-    //         favorited   : true,
-    //         likeRank    : 0
-    //     }
-    // ];
-    // restaurant.id = 0;
-    // restaurant.selected = restaurant.dishes[0].name;
-    // restaurant.name = "Lulu's Noodle House";
-    // res.send(JSON.stringify(restaurant));
+
 });
+
+
 
 router.get('/updatefavorite/:restaurant/:dish', function(req, res) {
     res.send(req.params.dish);
 });
 
 app.use('/', router);
+
+app.get('/getrestaurant/:long/:lat', function(req, res){
+
+});
+
+
+
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
