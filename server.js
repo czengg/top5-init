@@ -78,8 +78,10 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
     }, function(err, dish) {
         if (req.params.dish === 1) {
             dish.favorited = true;
+            dish.likes += 1;
         } else {
             dish.favorited = false;
+            dish.likes -= 1;
         }
         dish.save(function(err) {
             if (err) {
