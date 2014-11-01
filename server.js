@@ -1,3 +1,4 @@
+
 var http     = require('http'),
     path     = require('path'),
     fs       = require('fs'),
@@ -5,6 +6,7 @@ var http     = require('http'),
     mongo    = require('mongodb'),
     mongoose = require('mongoose'),
     express  = require('express');
+
 
 var app = express();
 var router = express.Router();
@@ -22,6 +24,7 @@ db.on('error', function(err) {
 db.once('open', function() {
     console.log("MongoDB connected");
 });
+
 
 // New mongoose schema to create our
 var Schema = mongoose.Schema;
@@ -71,6 +74,7 @@ router.get('/getrestaurant/:long/:lat', function(req, res) {
             }
         });
     });
+
 });
 
 router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
@@ -92,9 +96,17 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
             }
         });
     });
+
 });
 
 app.use('/', router);
+
+app.get('/getrestaurant/:long/:lat', function(req, res){
+
+});
+
+
+
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
