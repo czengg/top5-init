@@ -4,10 +4,22 @@ var DishesController = function ($http) {
 
     this.favoriteToggle = function(restaurant, dish) {
         dish.favorited = !dish.favorited;
-        var favoriteUrl = 'http://localhost:3000/updatefavorite/' + restaurant.id + '/' + dish.id;
-        $http.get(favoriteUrl).success(function(data) {
-            console.log(data);
-        });
+        var counter;
+        var f;
+        if (counter !== undefined) {
+            clearTimeout(counter);
+        }
+        counter = setTimeout(function() {
+            if (dish.favorited) {
+                f = 1;
+            } else {
+                f = 0;
+            }
+            var favoriteUrl = 'http://localhost:3000/updatefavorite/' + restaurant.id + '/' + dish.id + '/' + f;
+            $http.get(favoriteUrl).success(function(data) {
+                console.log(data);
+            });
+        }, 50);  
     }
     
     if (navigator.geolocation) {

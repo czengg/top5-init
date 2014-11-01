@@ -76,3 +76,17 @@ https://developer.apple.com/icloud/documentation/data-storage/
 
 2014-10-07 02:17:44.807 Top5[66099:1008237] Resetting plugins due to page load.
 2014-10-07 02:17:44.936 Top5[66099:1008237] Finished load of: file:///Users/czengg/Library/Developer/CoreSimulator/Devices/F9CE45F1-18D3-4BCE-9576-3B65506D2614/data/Containers/Bundle/Application/D28FF9F7-98C0-4CD1-8EB3-CBCE86D5763B/Top5.app/www/index.html
+2014-10-07 17:03:23.328 Top5[68954:1292790] DiskCookieStorage changing policy from 2 to 0, cookie file: file:///Users/czengg/Library/Developer/CoreSimulator/Devices/F9CE45F1-18D3-4BCE-9576-3B65506D2614/data/Containers/Data/Application/9BE810FD-8265-40E7-BC78-AD4C59CE9257/Library/Cookies/Cookies.binarycookies
+2014-10-07 17:03:23.376 Top5[68954:1292790] Apache Cordova native platform version 3.6.3 is starting.
+2014-10-07 17:03:23.376 Top5[68954:1292790] Multi-tasking -> Device: YES, App: YES
+2014-10-07 17:03:23.382 Top5[68954:1292790] Unlimited access to network resources
+2014-10-07 17:03:23.384 Top5[68954:1292790] 
+
+Started backup to iCloud! Please be careful.
+Your application might be rejected by Apple if you store too much data.
+For more information please read "iOS Data Storage Guidelines" at:
+https://developer.apple.com/icloud/documentation/data-storage/
+
+2014-10-07 17:03:23.763 Top5[68954:1292790] Resetting plugins due to page load.
+2014-10-07 17:03:23.882 Top5[68954:1292790] Finished load of: file:///Users/czengg/Library/Developer/CoreSimulator/Devices/F9CE45F1-18D3-4BCE-9576-3B65506D2614/data/Containers/Bundle/Application/E4D96A1E-E746-4B8B-B0D7-65F9C6B9872E/Top5.app/www/index.html
+2014-10-08 21:30:14.558 Top5[68954:2296368] Terminating since there is no system app.
