@@ -31,20 +31,20 @@ var Schema = mongoose.Schema;
 var Collection = mongoose.Collection;
 
 var Dish = new Schema({
-    id          : { type: int    , required: true },
+    id          : { type: Number , required: true },
     name        : { type: String , required: true },
     type        : { type: String , required: true },
     description : { type: String , required: true },
-    favorited   : { type: boolean, required: true },
-    likes       : { type: int    , required: true },
+    favorited   : { type: Boolean, required: true },
+    likes       : { type: Number , required: true },
     restaurant  : { type: String , required: true } 
 });
 var DishModel = db.model('Dish', Dish);
 
 var Restaurant = new Schema({
     name     : { type: String, required: true },
-    lat      : { type: float , required: true },
-    lon      : { type: float , required: true },
+    lat      : { type: Number, required: true },
+    lon      : { type: Number, required: true },
     dish_ids : { type: Array , required: true }
 });
 var RestaurantModel = db.model('Restaurant', Restaurant);
