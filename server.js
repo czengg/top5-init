@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public/www')));
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/data';
 var db = mongoose.createConnection(mongoUri);
 db.on('error', function(err) {
-    console.log('MongoDB connecton error:', err);
+    console.log('MongoDB connection error:', err);
 });
 db.once('open', function() {
     console.log("MongoDB connected");
