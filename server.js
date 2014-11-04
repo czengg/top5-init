@@ -5,7 +5,8 @@ var http     = require('http'),
     url      = require('url'),
     mongo    = require('mongodb'),
     mongoose = require('mongoose'),
-    express  = require('express');
+    express  = require('express'),
+    bodyParser = require('body-parser');
 
 
 var app = express();
@@ -37,7 +38,7 @@ var Dish = new Schema({
     description : { type: String , required: true },
     favorited   : { type: Boolean, required: true },
     likes       : { type: Number , required: true },
-    restaurant  : { type: String , required: true } 
+    restaurant  : { type: Number , required: true } 
 });
 var DishModel = db.model('Dish', Dish);
 
@@ -45,7 +46,7 @@ var Restaurant = new Schema({
     name     : { type: String, required: true },
     lat      : { type: Number, required: true },
     lon      : { type: Number, required: true },
-    dish_ids : { type: Array , required: true }
+    dish_ids : { type: Array , required: false }
 });
 var RestaurantModel = db.model('Restaurant', Restaurant);
 
@@ -77,6 +78,35 @@ router.get('/getrestaurant/:long/:lat', function(req, res) {
 
 });
 
+router.get('/test', function (req, res) {
+    res.sendFile('test.html',{ root: 'public/www' });
+});
+
+router.post('/test', function(req, res) {
+    console.log(req.body);
+    res.sendFile('test.html',{ root: 'public/www' });
+    // RestaurantModel.insert({
+    //     name : req.body.restaurant.name,
+    //     long : parseInt(req.body.restaurant.long),
+    //     lat  : parseInt(req.body.restaurant.lat),
+    // })
+    // for (var d in req.body.dishes) {
+    //     DishModel.insert({
+    //         name        : d.name,
+    //         type        : d.type,
+    //         description : d.description,
+    //         favorited   : 'false',
+    //         likes       : d.likes,
+    //         restaurant  :  d.restaurant
+    //     })
+    // }
+    // res.send(JSON.stringify(rest));
+    
+
+});
+
+
+
 router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
     DishModel.findOne({
         id: req.params.dish
@@ -101,9 +131,9 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
 
 app.use('/', router);
 
-app.get('/getrestaurant/:long/:lat', function(req, res){
 
-});
+
+
 
 
 
