@@ -1,21 +1,10 @@
-<<<<<<< HEAD
-var http    = require('http'),
-    path    = require('path'),
-    fs      = require('fs'),
-    url     = require('url'),
-    mongojs = require('mongojs'),
-    express = require('express');
-    jsdom = require("jsdom");
-    locu = require("locu");
-    vclient = new locu.VenueClient('a6d9c2a756e0ea4fecbece23c4849557cbef7fe5');
-=======
+
 var http     = require('http'),
     path     = require('path'),
     fs       = require('fs'),
     url      = require('url'),
     mongoose = require('mongoose'),
     express  = require('express');
->>>>>>> 64f2feecad730094717b76f203d2f74b89ef05b0
 
 var app = express();
 var router = express.Router();
@@ -34,18 +23,6 @@ db.once('open', function() {
     console.log("MongoDB connected");
 });
 
-<<<<<<< HEAD
-var databaseUrl = "top5db1"; // "username:password@example.com/mydb"
-var collections = ["restaurants"]
-var db = require("mongojs").connect(databaseUrl, collections);
-
-app.use(function(req,res,next){
-    req.db = db;
-    next();
-});
-
-
-=======
 // New mongoose schema to create our
 var Schema = mongoose.Schema;
 var Collection = mongoose.Collection;
@@ -74,7 +51,6 @@ router.get('/', function (req, res) {
 });
 
 // get all dishes for restaurant given longitude and latitude
->>>>>>> 64f2feecad730094717b76f203d2f74b89ef05b0
 router.get('/getrestaurant/:long/:lat', function(req, res) {
    RestaurantModel.findOne({
         long : parseInt(req.params.long),
@@ -98,12 +74,7 @@ router.get('/getrestaurant/:long/:lat', function(req, res) {
 
 });
 
-<<<<<<< HEAD
 
-
-router.get('/updatefavorite/:restaurant/:dish', function(req, res) {
-    res.send(req.params.dish);
-=======
 router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
     DishModel.findOne({
         id: req.params.dish
@@ -123,7 +94,6 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
             }
         });
     });
->>>>>>> 64f2feecad730094717b76f203d2f74b89ef05b0
 });
 
 app.use('/', router);
