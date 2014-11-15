@@ -1,3 +1,4 @@
+
 var http     = require('http'),
     path     = require('path'),
     fs       = require('fs'),
@@ -5,8 +6,13 @@ var http     = require('http'),
     mongo    = require('mongodb'),
     mongoose = require('mongoose'),
     express  = require('express'),
+<<<<<<< HEAD
     passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
+=======
+    bodyParser = require('body-parser');
+
+>>>>>>> 4284702f7116579cbc045dce260b5f1d9744bd28
 
 var app = express();
 var router = express.Router();
@@ -27,6 +33,7 @@ db.once('open', function() {
     console.log("MongoDB connected");
 });
 
+
 // New mongoose schema to create our
 var Schema = mongoose.Schema;
 var Collection = mongoose.Collection;
@@ -37,7 +44,7 @@ var Dish = new Schema({
     description    : { type: String , required: true },
     favorited      : { type: Boolean, required: true },
     likes          : { type: Number , required: true },
-    restaurant_id  : { type: String , required: true } 
+    restaurant_id  : { type: Number , required: true } 
 });
 var DishModel = db.model('Dish', Dish);
 
@@ -106,7 +113,37 @@ router.get('/getrestaurant/:long/:lat', function(req, res) {
             }
         });
     });
+
 });
+
+router.get('/test', function (req, res) {
+    res.sendFile('test.html',{ root: 'public/www' });
+});
+
+router.post('/test', function(req, res) {
+    console.log(req.body);
+    res.sendFile('test.html',{ root: 'public/www' });
+    // RestaurantModel.insert({
+    //     name : req.body.restaurant.name,
+    //     long : parseInt(req.body.restaurant.long),
+    //     lat  : parseInt(req.body.restaurant.lat),
+    // })
+    // for (var d in req.body.dishes) {
+    //     DishModel.insert({
+    //         name        : d.name,
+    //         type        : d.type,
+    //         description : d.description,
+    //         favorited   : 'false',
+    //         likes       : d.likes,
+    //         restaurant  :  d.restaurant
+    //     })
+    // }
+    // res.send(JSON.stringify(rest));
+    
+
+});
+
+
 
 router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
     DishModel.findOne({
@@ -128,6 +165,7 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
             }
         });
     });
+
 });
 
 router.get('/addrestaurant/:name/:lat/:lon', function(req, res) {
@@ -163,6 +201,13 @@ router.post('/adddish', function(req, res) {
 });
 
 app.use('/', router);
+
+
+
+
+
+
+
 
 http.createServer(app).listen(app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));

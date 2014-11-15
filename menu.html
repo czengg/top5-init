@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html data-ng-app="top5">
+    <head>
+        <title>Top5</title>
+        <link rel="stylesheet" href="css/app.css" type="text/css"></link>
+    </head>
+    <body data-ng-controller="DishesController as restaurant">
+        <div class="restaurant-container row">
+            <h1 class="restaurant-name">{{ restaurant.name }}</h1>
+        </div>
+        <div class="dish-container">
+            <div data-ng-repeat="dish in restaurant.dishes">
+                <div class="row" data-ng-class="{ first: dish.likeRank == 0, second: dish.likeRank == 1, third: dish.likeRank == 2, fourth: dish.likeRank == 3, fifth: dish.likeRank == 4 }">
+                    <div class="dish-type-container">
+                        <div class=" dish-type {{ dish.type }}">
+                        </div>
+                    </div>
+                    <div class="dish">
+                        <div class="dish-summary" data-ng-click="restaurant.selected = dish.name">
+                            <h1 class="dish-name">{{ dish.name }}</h1>
+                            <h2 class="dish-price">{{ dish.price | currency }}</h2>
+                        </div>
+                        <div class="dish-description animate-show" data-ng-show="restaurant.selected === dish.name"> 
+                            <p>{{ dish.description }}</p>
+                        </div>
+                    </div>
+                    <div class="favorite-container">
+                        <div class="favorite" data-ng-class="{ liked: dish.favorited }" data-ng-click="dish.favorited = !dish.favorited">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/bower_components/angular/angular.js"></script>
+        <script src="/bower_components/angular-animate/angular-animate.js"></script>
+        <script src="js/controllers/dishesController.js"></script>
+    </body>
+</html>
