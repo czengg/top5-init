@@ -6,8 +6,8 @@ var http     = require('http'),
     mongo    = require('mongodb'),
     mongoose = require('mongoose'),
     express  = require('express'),
-    passport = require('passport'),
-    FacebookStrategy = require('passport-facebook').Strategy;
+    // passport = require('passport'),
+    // FacebookStrategy = require('passport-facebook').Strategy;
     bodyParser = require('body-parser');
 
 
@@ -17,8 +17,8 @@ var router = express.Router();
 //all environments
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'public/www')));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 // establish mongo connection
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/data';
@@ -36,7 +36,6 @@ var Schema = mongoose.Schema;
 var Collection = mongoose.Collection;
 
 var Dish = new Schema({
-<<<<<<< HEAD
     id          : { type: Number , required: true },
     name        : { type: String , required: true },
     type        : { type: String , required: true },
@@ -44,54 +43,41 @@ var Dish = new Schema({
     favorited   : { type: Boolean, required: true },
     likes       : { type: Number , required: true },
     restaurant  : { type: Number , required: false } 
-=======
-    name           : { type: String , required: true },
-    type           : { type: String , required: true },
-    description    : { type: String , required: true },
-    favorited      : { type: Boolean, required: true },
-    likes          : { type: Number , required: true },
-    restaurant_id  : { type: Number , required: true } 
->>>>>>> 2b84a5fea3bf9c845015ed4979377b027be5a679
 });
 var DishModel = db.model('Dish', Dish);
 
 var Restaurant = new Schema({
     name     : { type: String, required: true },
     lat      : { type: Number, required: true },
-<<<<<<< HEAD
     long      : { type: Number, required: true },
     dish_ids : { type: Array , required: false },
     dishes : { type: Array , required: false }
-
-=======
-    lon      : { type: Number, required: true }
->>>>>>> 2b84a5fea3bf9c845015ed4979377b027be5a679
 });
 var RestaurantModel = db.model('Restaurant', Restaurant);
 
 // authentication
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://www.example.com/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  }
-));
+// passport.use(new FacebookStrategy({
+//     clientID: FACEBOOK_APP_ID,
+//     clientSecret: FACEBOOK_APP_SECRET,
+//     callbackURL: "http://www.example.com/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     User.findOrCreate(..., function(err, user) {
+//       if (err) { return done(err); }
+//       done(null, user);
+//     });
+//   }
+// ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+// passport.serializeUser(function(user, done) {
+//   done(null, user.id);
+// });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
+// passport.deserializeUser(function(id, done) {
+//   User.findById(id, function (err, user) {
+//     done(err, user);
+//   });
+// });
 
 router.get('/', function (req, res) {
     res.sendFile('index.html');
@@ -102,10 +88,10 @@ router.get('/login', function (req, res) {
     res.sendFile('login.html');
 })
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
-app.get('/auth/facebook/callback', 
-  passport.authenticate('facebook', { successRedirect: '/',
-                                      failureRedirect: '/login' }));
+// app.get('/auth/facebook', passport.authenticate('facebook'));
+// app.get('/auth/facebook/callback', 
+//   passport.authenticate('facebook', { successRedirect: '/',
+//                                       failureRedirect: '/login' }));
 
 // get all dishes for restaurant given longitude and latitude
 router.get('/getrestaurant/:long/:lat', function(req, res) {
