@@ -6,13 +6,8 @@ var http     = require('http'),
     mongo    = require('mongodb'),
     mongoose = require('mongoose'),
     express  = require('express'),
-<<<<<<< HEAD
-    passport = require('passport'),
-    FacebookStrategy = require('passport-facebook').Strategy;
-=======
-    bodyParser = require('body-parser');
-
->>>>>>> 4284702f7116579cbc045dce260b5f1d9744bd28
+    passport = require('passport');
+    // FacebookStrategy = require('passport-facebook').Strategy;
 
 var app = express();
 var router = express.Router();
@@ -56,28 +51,28 @@ var Restaurant = new Schema({
 var RestaurantModel = db.model('Restaurant', Restaurant);
 
 // authentication
-passport.use(new FacebookStrategy({
-    clientID: FACEBOOK_APP_ID,
-    clientSecret: FACEBOOK_APP_SECRET,
-    callbackURL: "http://www.example.com/auth/facebook/callback"
-  },
-  function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate(..., function(err, user) {
-      if (err) { return done(err); }
-      done(null, user);
-    });
-  }
-));
+// passport.use(new FacebookStrategy({
+//     clientID: FACEBOOK_APP_ID,
+//     clientSecret: FACEBOOK_APP_SECRET,
+//     callbackURL: "http://www.example.com/auth/facebook/callback"
+//   },
+//   function(accessToken, refreshToken, profile, done) {
+//     User.findOrCreate(..., function(err, user) {
+//       if (err) { return done(err); }
+//       done(null, user);
+//     });
+//   }
+// ));
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+// passport.serializeUser(function(user, done) {
+//   done(null, user.id);
+// });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function (err, user) {
-    done(err, user);
-  });
-});
+// passport.deserializeUser(function(id, done) {
+//   User.findById(id, function (err, user) {
+//     done(err, user);
+//   });
+// });
 
 router.get('/', function (req, res) {
     res.sendFile('index.html');
