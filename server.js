@@ -6,6 +6,8 @@ var http     = require('http'),
     mongo    = require('mongodb'),
     mongoose = require('mongoose'),
     express  = require('express'),
+    passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy;
     bodyParser = require('body-parser');
 
 
@@ -15,12 +17,14 @@ var router = express.Router();
 //all environments
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'public/www')));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // establish mongo connection
 var mongoUri = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || 'mongodb://localhost/data';
 var db = mongoose.createConnection(mongoUri);
 db.on('error', function(err) {
-    console.log('MongoDB connecton error:', err);
+    console.log('MongoDB connection error:', err);
 });
 db.once('open', function() {
     console.log("MongoDB connected");
@@ -32,6 +36,7 @@ var Schema = mongoose.Schema;
 var Collection = mongoose.Collection;
 
 var Dish = new Schema({
+<<<<<<< HEAD
     id          : { type: Number , required: true },
     name        : { type: String , required: true },
     type        : { type: String , required: true },
@@ -39,50 +44,68 @@ var Dish = new Schema({
     favorited   : { type: Boolean, required: true },
     likes       : { type: Number , required: true },
     restaurant  : { type: Number , required: false } 
+=======
+    name           : { type: String , required: true },
+    type           : { type: String , required: true },
+    description    : { type: String , required: true },
+    favorited      : { type: Boolean, required: true },
+    likes          : { type: Number , required: true },
+    restaurant_id  : { type: Number , required: true } 
+>>>>>>> 2b84a5fea3bf9c845015ed4979377b027be5a679
 });
 var DishModel = db.model('Dish', Dish);
 
 var Restaurant = new Schema({
     name     : { type: String, required: true },
     lat      : { type: Number, required: true },
+<<<<<<< HEAD
     long      : { type: Number, required: true },
     dish_ids : { type: Array , required: false },
     dishes : { type: Array , required: false }
 
+=======
+    lon      : { type: Number, required: true }
+>>>>>>> 2b84a5fea3bf9c845015ed4979377b027be5a679
 });
 var RestaurantModel = db.model('Restaurant', Restaurant);
+
+// authentication
+passport.use(new FacebookStrategy({
+    clientID: FACEBOOK_APP_ID,
+    clientSecret: FACEBOOK_APP_SECRET,
+    callbackURL: "http://www.example.com/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    User.findOrCreate(..., function(err, user) {
+      if (err) { return done(err); }
+      done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 router.get('/', function (req, res) {
     res.sendFile('index.html');
 });
 
 
-var lulus = new RestaurantModel({"name" : "Lulu's Noodles", "lat" : 40, "long" : -80, dish_ids: [1,2,3,4,5]})
-var dish1 = new DishModel({ "id" : 1, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
-var dish2 = new DishModel({ "id" : 2, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
-var dish3 = new DishModel({ "id" : 3, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
-var dish4 = new DishModel({ "id" : 4, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
-var dish5 = new DishModel({ "id" : 5, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
+router.get('/login', function (req, res) {
+    res.sendFile('login.html');
+})
 
-// dish1.save(function (err, dish1) {
-//   if (err) return console.error(err);
-// });
-// dish2.save(function (err, dish1) {
-//   if (err) return console.error(err);
-// });
-// dish3.save(function (err, dish1) {
-//   if (err) return console.error(err);
-// });
-// dish4.save(function (err, dish1) {
-//   if (err) return console.error(err);
-// });
-// dish5.save(function (err, dish1) {
-//   if (err) return console.error(err);
-// });
-// lulus.save(function (err, lulus) {
-//   if (err) return console.error(err);
-// });
-
+app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook/callback', 
+  passport.authenticate('facebook', { successRedirect: '/',
+                                      failureRedirect: '/login' }));
 
 // get all dishes for restaurant given longitude and latitude
 router.get('/getrestaurant/:long/:lat', function(req, res) {
@@ -145,6 +168,7 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
     DishModel.findOne({
         id: req.params.dish
     }, function(err, dish) {
+        if (err) { res.send(err) }
         if (req.params.dish === 1) {
             dish.favorited = true;
             dish.likes += 1;
@@ -161,6 +185,38 @@ router.get('/updatefavorite/:restaurant/:dish/:favorite', function(req, res) {
         });
     });
 
+});
+
+router.get('/addrestaurant/:name/:lat/:lon', function(req, res) {
+    var restaurant = new RestaurantModel({
+        name: req.params.name,
+        lat: req.params.lat,
+        lon: req.params.lon
+    });
+    restaurant.save(function(err){
+        if (err) { res.send(err) }
+        res.send(restaurant);
+    });
+});
+
+router.post('/adddish', function(req, res) {
+    RestaurantModel.findOne({
+        name: req.body.restaurant
+    }, function (err, restaurant) {
+        if (err) { res.send(err) }
+        var dish = new DishModel({
+            name: req.body.dish.name,
+            type: req.body.dish.type,
+            description: req.body.dish.description,
+            favorited: req.body.dish.favorited,
+            likes: req.body.dish.likes,
+            restaurant_id: restaurant._id
+        });
+        dish.save(function(err) {
+            if (err) { res.send(err) }
+            res.send(dish);
+        });
+    });
 });
 
 app.use('/', router);
