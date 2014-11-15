@@ -38,15 +38,17 @@ var Dish = new Schema({
     description : { type: String , required: true },
     favorited   : { type: Boolean, required: true },
     likes       : { type: Number , required: true },
-    restaurant  : { type: Number , required: true } 
+    restaurant  : { type: Number , required: false } 
 });
 var DishModel = db.model('Dish', Dish);
 
 var Restaurant = new Schema({
     name     : { type: String, required: true },
     lat      : { type: Number, required: true },
-    lon      : { type: Number, required: true },
-    dish_ids : { type: Array , required: false }
+    long      : { type: Number, required: true },
+    dish_ids : { type: Array , required: false },
+    dishes : { type: Array , required: false }
+
 });
 var RestaurantModel = db.model('Restaurant', Restaurant);
 
@@ -54,24 +56,56 @@ router.get('/', function (req, res) {
     res.sendFile('index.html');
 });
 
+
+var lulus = new RestaurantModel({"name" : "Lulu's Noodles", "lat" : 40, "long" : -80, dish_ids: [1,2,3,4,5]})
+var dish1 = new DishModel({ "id" : 1, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
+var dish2 = new DishModel({ "id" : 2, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
+var dish3 = new DishModel({ "id" : 3, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
+var dish4 = new DishModel({ "id" : 4, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
+var dish5 = new DishModel({ "id" : 5, "type" : "food", "name" : "Pad Thai", "price" : 7.25, "description" : "Thai rice noodles stir fried in a special thai sauce with egg, tofu, bean sprouts, green onions, and chopped peanuts, then garnished with bean sprouts and red cabbage.", "favorited" : true, "likes" : 2 })
+
+// dish1.save(function (err, dish1) {
+//   if (err) return console.error(err);
+// });
+// dish2.save(function (err, dish1) {
+//   if (err) return console.error(err);
+// });
+// dish3.save(function (err, dish1) {
+//   if (err) return console.error(err);
+// });
+// dish4.save(function (err, dish1) {
+//   if (err) return console.error(err);
+// });
+// dish5.save(function (err, dish1) {
+//   if (err) return console.error(err);
+// });
+// lulus.save(function (err, lulus) {
+//   if (err) return console.error(err);
+// });
+
+
 // get all dishes for restaurant given longitude and latitude
 router.get('/getrestaurant/:long/:lat', function(req, res) {
    RestaurantModel.findOne({
         long : parseInt(req.params.long),
-        lat  : parseInt(req.params.lat)
+        lat  : parseInt(req.params.lat),
+        dish_ids : [1,2,3,4,5]
    }, function(restaurantErr, restaurants) {
-         var rest = restaurants[0];
+        // console.log(restaurants.dish_ids);
+         var rest = restaurants;
         DishModel.find({
-            id : { $in : rest.dish_ids }
+            id : { $in : restaurants.dish_ids }
         }, function(dishErr, dishes) {
             if (restaurantErr) {
                 res.send(JSON.stringify(restaurantErr));
             } else if (dishErr) {
                 res.send(JSON.stringify(dishErr));
             } else {
+                
                 rest.dishes = dishes;
                 rest.selected = dishes[0];
                 res.send(JSON.stringify(rest));
+                
             }
         });
     });
